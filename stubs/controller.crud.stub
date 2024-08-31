@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\ApiController;
+use App\Http\Requests\$modelName$Request;
+use App\Http\Resources\$modelName$Resource;
+use App\Services\$modelName$Service;
+
+class $modelName$Controller extends ApiController
+{
+    public function __construct(private $modelName$Service $$modelVar$Service)
+    {
+    }
+
+    public function index()
+    {
+        return $this->successResponse(
+            $this->resource($this->$modelVar$Service->index(), $modelName$Resource::class),
+            'dataFetchedSuccessfully'
+        );
+    }
+
+    public function show($$modelVar$Id)
+    {
+        return $this->successResponse(
+            $this->resource($this->$modelVar$Service->show($$modelVar$Id), $modelName$Resource::class),
+            'dataFetchedSuccessfully'
+        );
+    }
+
+    public function store($modelName$Request $request)
+    {
+        return $this->successResponse(
+            $this->resource( $this->$modelVar$Service->store($request->validated()), $modelName$Resource::class),
+            'dataAddedSuccessfully'
+        );
+    }
+
+    public function update($modelName$Request $request, $$modelVar$Id)
+    {
+        $validatedData = $request->validated();
+        $this->$modelVar$Service->update($validatedData, $$modelVar$Id);
+
+        return $this->successResponse(
+            null,
+            'dataUpdatedSuccessfully'
+        );
+    }
+
+    public function delete($$modelVar$Id)
+    {
+        $this->$modelVar$Service->delete($$modelVar$Id);
+
+        return $this->successResponse(
+            null,
+            'dataDeletedSuccessfully'
+        );
+    }
+}

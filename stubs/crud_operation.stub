@@ -1,0 +1,62 @@
+<?php
+
+namespace $namespace$;
+
+use Illuminate\Http\Request;
+use App\Services\$serviceClass$;
+use App\Http\Requests\$modelName$Request;
+use App\Http\Resources\$modelName$Resource;
+use $rootNamespace$Http\Controllers\Controller;
+
+class $class$ extends BaseController
+{
+
+    public function __construct(private $serviceClass$ $serviceVarWithDollarSign$)
+    {}
+
+    public function index()
+    {
+        return $this->successResponse(
+            $this->resource($this->$serviceVar$->getAll(),$modelName$Resource::class),
+            'DataSuccessfullyFetched',
+            '$objectPlural$'
+        );
+    }
+
+
+    public function store($modelName$Request $request)
+    {
+        return $this->successResponse(
+            $this->resource($this->$serviceVar$->store($request->validated()),$modelName$Resource::class),
+            'AddedSuccessfully',
+            '$modelName$'
+        );
+    }
+
+    public function show($modelName$Request  $request)
+    {
+        return $this->successResponse(
+            $this->resource($this->$serviceVar$->show($request->id),$modelName$Resource::class),
+            'DataSuccessfullyFetched',
+            '$modelName$'
+        );
+    }
+
+    public function update($modelName$Request $request , $id)
+    {
+        return $this->successResponse(
+            $this->$serviceVar$->update( $request->validated(),$id),
+            'UpdatedSuccessfully',
+            '$modelName$'
+        );
+    }
+
+    public function destroy($id)
+    {
+        return $this->successResponse(
+            $this->$serviceVar$->destroy($id),
+            'DeletedSuccessfully',
+            '$modelName$'
+        );
+    }
+}

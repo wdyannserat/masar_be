@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('child_mission', function (Blueprint $table) {
+            $table->id();
+            $table->double('progress');
+            $table->enum('status', ['Done', 'InProgress']);
+            //*Foreign Keys
+            $table->unsignedBigInteger('mission_program_id');
+            $table->foreign('mission_program_id')->references('id')->on('mission_program')->onDelete('cascade');
+            $table->foreignId('child_id')->constrained()->cascadeOnDelete();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('child_mission');
+    }
+};

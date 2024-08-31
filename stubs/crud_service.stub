@@ -1,0 +1,65 @@
+<?php
+
+namespace $namespace$;
+
+use App\Models\$serviceName$;
+use Illuminate\Support\Facades\DB;
+
+
+class $class$ extends BaseService
+{
+    public function getAll()
+    {
+        return  $serviceName$::all();
+    }
+
+
+    public function store($validatedData)
+    {
+        DB::beginTransaction();
+
+        $modelVar$ = $serviceName$::create($validatedData);
+        DB::commit();
+        return $modelVar$;
+    }
+
+    public function show($id)
+    {
+        $modelVar$ = $this->find($id);
+
+        return $modelVar$;
+    }
+
+
+    public function update($validatedData , $id)
+    {
+        DB::beginTransaction();
+
+
+        $modelVar$ = $this->find($id);
+
+        $modelVar$->update($validatedData);
+
+        DB::commit();
+        return $modelVar$;
+    }
+
+
+    public function destroy($id)
+    {
+        $modelVar$ = $this->find($id);
+
+        DB::beginTransaction();
+
+
+        $modelVar$->delete();
+        DB::commit();
+
+        return true;
+    }
+
+    public static function find($id){
+        return parent::findByIdOrFail($serviceName$::class, '$serviceName$', $id);
+    }
+
+}
